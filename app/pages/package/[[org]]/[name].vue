@@ -99,6 +99,7 @@ const {
 const { copied: copiedReadme, copy: copyReadme } = useClipboard({
   source: () => '',
   copiedDuring: 2000,
+  legacy: true,
 })
 
 function prefetchReadmeMarkdown() {
@@ -108,9 +109,12 @@ function prefetchReadmeMarkdown() {
 }
 
 async function copyReadmeHandler() {
-  await fetchReadmeMarkdown()
+  let markdown = readmeMarkdownData.value?.markdown
+  if (!markdown) {
+    await fetchReadmeMarkdown()
+    markdown = readmeMarkdownData.value?.markdown
+  }
 
-  const markdown = readmeMarkdownData.value?.markdown
   if (!markdown) return
 
   await copyReadme(markdown)

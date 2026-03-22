@@ -73,31 +73,50 @@ const MEDIUM_CHARS = new Set([
   '~',
 ])
 
+const FALLBACK_WIDTHS = {
+  default: {
+    narrow: 3,
+    medium: 5,
+    digit: 6,
+    uppercase: 7,
+    other: 6,
+  },
+  shieldsio: {
+    narrow: 3,
+    medium: 5,
+    digit: 6,
+    uppercase: 7,
+    other: 5.5,
+  },
+} as const
+
 function estimateTextWidth(text: string, fallbackFont: 'default' | 'shieldsio'): number {
+  // Heuristic coefficients tuned to keep fallback rendering close to canvas metrics.
+  const widths = FALLBACK_WIDTHS[fallbackFont]
   let totalWidth = 0
 
   for (const character of text) {
     if (NARROW_CHARS.has(character)) {
-      totalWidth += 3
+      totalWidth += widths.narrow
       continue
     }
 
     if (MEDIUM_CHARS.has(character)) {
-      totalWidth += 5
+      totalWidth += widths.medium
       continue
     }
 
     if (/\d/.test(character)) {
-      totalWidth += 6
+      totalWidth += widths.digit
       continue
     }
 
     if (/[A-Z]/.test(character)) {
-      totalWidth += 7
+      totalWidth += widths.uppercase
       continue
     }
 
-    totalWidth += fallbackFont === 'shieldsio' ? 5.5 : 6
+    totalWidth += widths.other
   }
 
   return Math.max(1, Math.round(totalWidth))

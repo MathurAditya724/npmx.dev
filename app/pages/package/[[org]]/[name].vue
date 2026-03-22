@@ -102,9 +102,13 @@ function maybePrefetchReadmeMarkdown() {
   void fetchReadmeMarkdown()
 }
 
-watch([() => readmeData.value.mdExists, readmeMarkdownStatus], () => {
-  maybePrefetchReadmeMarkdown()
-}, { immediate: true })
+watch(
+  [() => readmeData.value.mdExists, readmeMarkdownStatus],
+  () => {
+    maybePrefetchReadmeMarkdown()
+  },
+  { immediate: true },
+)
 
 //copy README file as Markdown
 const { copied: copiedReadme, copy: copyReadme } = useClipboard({
@@ -155,8 +159,7 @@ async function copyReadmeHandler() {
     if (!markdown) return
 
     await copyReadme(markdown)
-  }
-  finally {
+  } finally {
     isCopyingReadme.value = false
   }
 }
@@ -1027,11 +1030,7 @@ const showSkeleton = shallowRef(false)
             </h2>
             <div class="flex gap-2">
               <!-- Copy readme as Markdown button -->
-              <TooltipApp
-                v-if="readmeData?.mdExists"
-                :text="readmeCopyTooltip"
-                position="bottom"
-              >
+              <TooltipApp v-if="readmeData?.mdExists" :text="readmeCopyTooltip" position="bottom">
                 <ButtonBase
                   @mouseenter="prefetchReadmeMarkdown"
                   @focus="prefetchReadmeMarkdown"

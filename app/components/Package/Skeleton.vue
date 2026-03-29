@@ -13,6 +13,8 @@
         <SkeletonBlock class="w-9 md:w-36 h-9 rounded" />
         <!-- Likes button placeholder -->
         <SkeletonBlock class="w-14 h-9 rounded" />
+        <!-- Fund link placeholder -->
+        <SkeletonBlock class="w-22 h-9 rounded self-baseline" />
       </div>
     </div>
   </header>
@@ -130,8 +132,11 @@
         <h2 class="text-xs font-mono text-fg-subtle uppercase tracking-wider">
           {{ $t('package.get_started.title') }}
         </h2>
-        <!-- Package manager select placeholder -->
-        <SkeletonInline class="h-7 w-24 rounded" />
+        <!-- Download button + Package manager select placeholder -->
+        <div class="flex items-center gap-2">
+          <SkeletonInline class="h-7 w-24 rounded" />
+          <SkeletonInline class="h-7 w-24 rounded" />
+        </div>
       </div>
       <!-- Terminal-style install command — matches TerminalInstall.vue -->
       <div class="bg-bg-subtle border border-border rounded-lg overflow-hidden">
